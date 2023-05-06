@@ -1,7 +1,13 @@
 import { createRoot } from "react-dom/client";
+import Search from "./search";
 
 const App = () => {
-  return <div>Adopt me!</div>;
+  return (
+    <div>
+      <h1>Pet Adopter</h1>
+      <Search />
+    </div>
+  );
 };
 
 const container = document.getElementById("root");
