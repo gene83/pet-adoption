@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
+import {
+  Animal,
+  BreedListAPIResponse,
+  Pet,
+  PetAPIResponse,
+} from "./APIResponseTypes";
 const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
-
-type Animal = "dog" | "cat" | "bird" | "rabbit" | "reptile";
 
 const Search = () => {
   const [animal, setAnimal] = useState("" as Animal);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [breeds, setBreeds] = useState<string[]>([]);
+
+  useEffect(() => {
+    requestPets({ location: "", animal: "", breed: "" });
+  }, []);
 
   useEffect(() => {
     fetchBreedList();
@@ -20,7 +29,7 @@ const Search = () => {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/breeds?animal=${animal}`
     );
-    const json = await res.json();
+    const json: BreedListAPIResponse = await res.json();
     setBreeds(json.breeds ?? []);
   };
 
@@ -36,8 +45,8 @@ const Search = () => {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
-    const json = await res.json();
-    console.log(json);
+    const json: PetAPIResponse = await res.json();
+    setPets(json.pets);
   };
 
   return (
@@ -86,6 +95,17 @@ const Search = () => {
           <button type="submit">Search</button>
         </label>
       </form>
+      <div className="results">
+        {pets.map((pet) => (
+          <div className="pet">
+            <img src={pet.images[0]} alt={pet.name} />
+            <h2>{pet.name}</h2>
+            <span>
+              {pet.animal} - {pet.breed} - {pet.city}, {pet.state}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
