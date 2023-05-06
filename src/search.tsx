@@ -13,6 +13,7 @@ const Search = () => {
 
   const fetchBreedList = async () => {
     if (!animal) {
+      setBreeds([]);
       return;
     }
 
@@ -23,9 +24,36 @@ const Search = () => {
     setBreeds(json.breeds ?? []);
   };
 
+  const requestPets = async ({
+    location,
+    animal,
+    breed,
+  }: {
+    location: string;
+    animal: string;
+    breed: string;
+  }) => {
+    const res = await fetch(
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+    );
+    const json = await res.json();
+    console.log(json);
+  };
+
   return (
     <div>
-      <form action="search">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.currentTarget);
+          const searchParams = {
+            location: formData.get("location")?.toString() ?? "",
+            animal: formData.get("animal")?.toString() ?? "",
+            breed: formData.get("breed")?.toString() ?? "",
+          };
+          requestPets(searchParams);
+        }}
+      >
         Location:
         <label htmlFor="location">
           <input type="text" name="location" />
@@ -55,6 +83,7 @@ const Search = () => {
               </option>
             ))}
           </select>
+          <button type="submit">Search</button>
         </label>
       </form>
     </div>
