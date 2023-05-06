@@ -5,6 +5,7 @@ import {
   Pet,
   PetAPIResponse,
 } from "./APIResponseTypes";
+import Results from "./Results";
 const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
 
 const Search = () => {
@@ -95,17 +96,7 @@ const Search = () => {
           <button type="submit">Search</button>
         </label>
       </form>
-      <div className="results">
-        {pets.map((pet) => (
-          <div className="pet">
-            <img src={pet.images[0]} alt={pet.name} />
-            <h2>{pet.name}</h2>
-            <span>
-              {pet.animal} - {pet.breed} - {pet.city}, {pet.state}
-            </span>
-          </div>
-        ))}
-      </div>
+      <Results pets={pets} />
     </div>
   );
 };
