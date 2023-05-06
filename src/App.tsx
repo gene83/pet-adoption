@@ -1,10 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 const App = () => {
-  return React.createElement("div", {}, "hello world");
+  return <div>Adopt me!</div>;
 };
 
 const container = document.getElementById("root");
-const root = ReactDOM.createRoot(container);
-root.render(React.createElement(App));
+
+if (!container) {
+  throw new Error("No container to render to.");
+}
+
+const root = createRoot(container);
+root.render(<App />);
