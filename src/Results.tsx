@@ -3,7 +3,7 @@ import Pet from "./Pet";
 
 const Results = ({ pets }: { pets: PetType[] }) => {
   return (
-    <div className="results">
+    <div className="search">
       {!pets.length ? (
         <h1>No pets Found</h1>
       ) : (

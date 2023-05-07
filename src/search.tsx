@@ -51,7 +51,7 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div className="search-params">
       <form
         onSubmit={(e) => {
           e.preventDefault();
