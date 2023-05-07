@@ -18,10 +18,10 @@ const useBreedList = (animal: Animal) => {
       );
       const json: BreedListAPIResponse = await res.json();
       setBreeds(json.breeds ?? []);
-
-      return breeds;
     }
   }, [animal]);
+
+  return breeds;
 };
 
 export default useBreedList;

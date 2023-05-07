@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Animal,
-  BreedListAPIResponse,
   Pet,
   PetAPIResponse,
 } from "./APIResponseTypes";
