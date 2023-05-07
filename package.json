@@ -1,13 +1,13 @@
 {
   "author": "Brian Holt",
   "dependencies": {
-    "@tanstack/react-query": "4.10.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.4.1"
   },
   "description": "Complete Intro to React v8 project",
   "devDependencies": {
+    "@tanstack/react-query": "^4.29.5",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "5.40.1",
