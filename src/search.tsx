@@ -12,7 +12,7 @@ const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
 const Search = () => {
   const [animal, setAnimal] = useState("" as Animal);
   const [pets, setPets] = useState<Pet[]>([]);
-  const breeds = useBreedList(animal);
+  const [breeds] = useBreedList(animal);
 
   useEffect(() => {
     requestPets({ location: "", animal: "", breed: "" });
