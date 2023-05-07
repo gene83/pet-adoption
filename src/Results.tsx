@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Pet as PetType } from "./APIResponseTypes";
 import Pet from "./Pet";
 
@@ -9,16 +10,18 @@ const Results = ({ pets }: { pets: PetType[] }) => {
       ) : (
         pets.map((pet) => {
           return (
-            <Pet
-              key={pet.id}
-              id={pet.id}
-              animal={pet.animal}
-              name={pet.name}
-              breed={pet.breed}
-              city={pet.city}
-              state={pet.state}
-              images={pet.images}
-            />
+            <Link key={pet.id} to={`/details/${pet.id}`}>
+              <Pet
+                key={pet.id}
+                id={pet.id}
+                animal={pet.animal}
+                name={pet.name}
+                breed={pet.breed}
+                city={pet.city}
+                state={pet.state}
+                images={pet.images}
+              />
+            </Link>
           );
         })
       )}
