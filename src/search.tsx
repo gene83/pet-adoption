@@ -6,33 +6,17 @@ import {
   PetAPIResponse,
 } from "./APIResponseTypes";
 import Results from "./Results";
+import useBreedList from "./hooks/useBreedList";
 const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
 
 const Search = () => {
   const [animal, setAnimal] = useState("" as Animal);
   const [pets, setPets] = useState<Pet[]>([]);
-  const [breeds, setBreeds] = useState<string[]>([]);
+  const breeds = useBreedList(animal);
 
   useEffect(() => {
     requestPets({ location: "", animal: "", breed: "" });
   }, []);
-
-  useEffect(() => {
-    fetchBreedList();
-  }, [animal]);
-
-  const fetchBreedList = async () => {
-    if (!animal) {
-      setBreeds([]);
-      return;
-    }
-
-    const res = await fetch(
-      `http://pets-v2.dev-apis.com/breeds?animal=${animal}`
-    );
-    const json: BreedListAPIResponse = await res.json();
-    setBreeds(json.breeds ?? []);
-  };
 
   const requestPets = async ({
     location,
