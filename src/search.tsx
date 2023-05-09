@@ -8,33 +8,21 @@ import {
 import Results from "./Results";
 import useBreedList from "./hooks/useBreedList";
 import { AdoptedPetContext } from "./petContext";
+import { useQuery } from "@tanstack/react-query";
+import fetchSearch from "./fetchSearch";
 const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
 
 const Search = () => {
   const [animal, setAnimal] = useState("" as Animal);
-  const [pets, setPets] = useState<Pet[]>([]);
   const [breeds] = useBreedList(animal);
   const [adoptedPet] = useContext(AdoptedPetContext);
-
-  useEffect(() => {
-    requestPets({ location: "", animal: "", breed: "" });
-  }, []);
-
-  const requestPets = async ({
-    location,
-    animal,
-    breed,
-  }: {
-    location: string;
-    animal: string;
-    breed: string;
-  }) => {
-    const res = await fetch(
-      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-    );
-    const json: PetAPIResponse = await res.json();
-    setPets(json.pets);
-  };
+  const [searchParams, setSearchParams] = useState({
+    location: "",
+    animal: "",
+    breed: "",
+  });
+  const results = useQuery(["search", searchParams], fetchSearch);
+  const pets = results.data?.pets ?? [];
 
   return (
     <div className="search-params">
@@ -47,7 +35,7 @@ const Search = () => {
             animal: formData.get("animal")?.toString() ?? "",
             breed: formData.get("breed")?.toString() ?? "",
           };
-          requestPets(searchParams);
+          setSearchParams(searchParams);
         }}
       >
         {adoptedPet ? (
