@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Animal,
   BreedListAPIResponse,
@@ -7,12 +7,14 @@ import {
 } from "./APIResponseTypes";
 import Results from "./Results";
 import useBreedList from "./hooks/useBreedList";
+import { AdoptedPetContext } from "./petContext";
 const ANIMALS: Animal[] = ["dog", "cat", "bird", "rabbit", "reptile"];
 
 const Search = () => {
   const [animal, setAnimal] = useState("" as Animal);
   const [pets, setPets] = useState<Pet[]>([]);
   const [breeds] = useBreedList(animal);
+  const [adoptedPet] = useContext(AdoptedPetContext);
 
   useEffect(() => {
     requestPets({ location: "", animal: "", breed: "" });
@@ -48,12 +50,17 @@ const Search = () => {
           requestPets(searchParams);
         }}
       >
-        Location:
+        {adoptedPet ? (
+          <div className="pet image-container">
+            <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
+          </div>
+        ) : null}
         <label htmlFor="location">
+          Location
           <input type="text" name="location" />
         </label>
         <label htmlFor="animal">
-          Animal:
+          Animal
           <select
             name="animal"
             value={animal}
@@ -68,7 +75,7 @@ const Search = () => {
           </select>
         </label>
         <label htmlFor="breed">
-          Breed:
+          Breed
           <select name="breed">
             <option value={""} />
             {breeds.map((animal) => (
