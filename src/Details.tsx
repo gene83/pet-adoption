@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { PetAPIResponse } from "./APIResponseTypes";
 import fetchPet from "./queries/fetchPet";
 import Carousel from "./Carousel";
 
